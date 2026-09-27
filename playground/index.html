@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Templix — a compiling template engine, live</title>
+<style>
+  :root {
+    --bg: #0d1016; --panel: #151a23; --border: #29323f;
+    --text: #e0e7ef; --muted: #7d8899; --accent: #6cb6ff; --ok: #56d364; --err: #f2705e; --amber: #e5b567;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 12px; }
+  header h1 { font-size: 19px; color: var(--accent); }
+  header span { color: var(--muted); font-size: 13px; }
+  header a { color: var(--muted); font-size: 13px; margin-left: auto; }
+  .layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 12px 20px; }
+  @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+  .card h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+  textarea { width: 100%; height: 240px; background: #090d13; color: var(--text); border: 1px solid var(--border);
+             border-radius: 6px; padding: 10px; font: 13px/1.5 ui-monospace, Menlo, monospace; resize: vertical; outline: none; }
+  #data { height: 140px; }
+  button { background: var(--accent); border: 0; border-radius: 6px; color: #06111f; padding: 6px 14px; font-weight: 600; cursor: pointer; font-size: 13px; }
+  button:hover { filter: brightness(1.12); }
+  .bar { display: flex; gap: 8px; padding: 0 20px 12px; align-items: center; }
+  #preview { background: #fff; color: #111; border-radius: 6px; min-height: 120px; padding: 12px; font: 14px/1.5 Georgia, serif; }
+  #code { height: 260px; overflow: auto; font: 11.5px/1.5 ui-monospace, Menlo, monospace; white-space: pre; color: #9ecbff; }
+  .msg { font: 12.5px ui-monospace, monospace; min-height: 16px; margin-top: 6px; }
+  .msg.err { color: var(--err); }
+  .msg.ok { color: var(--ok); }
+  #benchout { font: 12.5px ui-monospace, monospace; }
+  .bar-row { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+  .bar-row .bar { height: 12px; background: var(--ok); border-radius: 3px; }
+  .bar-row.n .bar { background: var(--amber); }
+  .bar-row .lbl { width: 90px; }
+  footer { padding: 8px 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>{% Templix %}</h1>
+  <span>templates compile to plain JavaScript functions — auto-escaped, folded, source-mapped</span>
+  <a href="https://github.com/sudeanb/templix">GitHub ↗</a>
+</header>
+<div class="bar">
+  <button id="render">▶ Render</button>
+  <button id="bench" class="ghost">🏁 Bench compiled vs naive</button>
+</div>
+<div class="layout">
+  <div class="card">
+    <h2>Template</h2>
+    <textarea id="tpl" spellcheck="false"></textarea>
+    <h2 style="margin-top:8px">Data (JSON)</h2>
+    <textarea id="data" spellcheck="false"></textarea>
+    <div class="msg" id="msg"></div>
+  </div>
+  <div class="card">
+    <h2>Preview</h2>
+    <div id="preview"></div>
+    <h2 style="margin-top:10px">Benchmark</h2>
+    <div id="benchout"></div>
+  </div>
+  <div class="card">
+    <h2>Generated function (the compilation output)</h2>
+    <div id="code"></div>
+    <div class="msg" id="analyze"></div>
+  </div>
+</div>
+<footer>Auto-escaping is on by default; {{{ raw }}} opts out (and analyze() flags it). Source maps and constant folding happen at compile time.</footer>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

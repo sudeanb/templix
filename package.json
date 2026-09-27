@@ -1,0 +1,10 @@
+{
+  "name": "templix",
+  "version": "0.1.0",
+  "description": "A compiling template engine: templates become plain JavaScript functions — constant-folded, auto-escaped, source-mapped. Zero dependencies.",
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=18" },
+  "keywords": ["template-engine", "compiler", "code-generation", "auto-escape", "xss", "source-map", "benchmark"],
+  "license": "MIT"
+}
